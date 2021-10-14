@@ -1,0 +1,1 @@
+clang++ -Wall -g -pthread BankAccount.cpp tests.cpp -lgtest_main -lgtest -lpthread -o test

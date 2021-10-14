@@ -94,6 +94,8 @@ TEST_F(BankAccountPreSetTest, PreSet_1) {
 
 TEST_F(BankAccountPreSetTest, PreSet_2) {
     EXPECT_NE(10, account->value);
+    account->value = 10;
+    ASSERT_EQ(10, account->value);
 };
 
 int main(int argc, char* argv[]) {
