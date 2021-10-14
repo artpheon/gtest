@@ -20,12 +20,26 @@ struct BankAccountTest : testing::Test {
     BankAccount* account = nullptr;
 
     BankAccountTest() {
-        account = new BankAccount;
-    }
+        account = new BankAccount();
+    };
 
     ~BankAccountTest() {
         delete account;
-    }
+    };
+};
+
+class BankAccountPreSetTest : public ::testing::Test {
+    protected:
+        BankAccount* account = nullptr;
+
+        void SetUp() {
+            account = new BankAccount();
+            account->value = 5;
+        };
+
+        void TearDown() {
+            delete account;
+        };
 };
 
 struct account_state {
@@ -73,6 +87,14 @@ TEST_F(BankAccountTest, CanDeposit) {
     EXPECT_EQ(5, account->value);
 };
 
+TEST_F(BankAccountPreSetTest, PreSet_1) {
+    EXPECT_EQ(5, account->value);
+    account->value = 10; // changing the value to verify the next time fixture created anew
+};
+
+TEST_F(BankAccountPreSetTest, PreSet_2) {
+    EXPECT_NE(10, account->value);
+};
 
 int main(int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
